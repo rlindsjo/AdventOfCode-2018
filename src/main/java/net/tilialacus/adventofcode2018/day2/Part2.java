@@ -2,14 +2,14 @@ package net.tilialacus.adventofcode2018.day2;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
+
+import static net.tilialacus.adventofcode2018.Input.inputFor;
 
 public class Part2 {
 
     public static void main(String[] args) throws URISyntaxException, IOException {
-        List<String> lines = Files.readAllLines(Path.of(Part2.class.getResource("input.txt").toURI()));
+        List<String> lines = inputFor(Part2.class);
 
         for (int i = 0; i < lines.size() -1; i ++) {
             for (int j = i+1 ; j < lines.size(); j++) {
