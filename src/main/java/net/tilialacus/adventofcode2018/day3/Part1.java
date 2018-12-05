@@ -2,8 +2,6 @@ package net.tilialacus.adventofcode2018.day3;
 
 import net.tilialacus.adventofcode2018.Input;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,7 +10,7 @@ public class Part1 {
 
     private static Pattern pattern = Pattern.compile("#\\d+ \\@ (?<x>\\d+),(?<y>\\d+): (?<width>\\d+)x(?<height>\\d+)");
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) {
         int fabric[][] = new int[1000][1000];
         List<String> claims = Input.inputFor(Part1.class);
 

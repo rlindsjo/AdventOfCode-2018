@@ -1,14 +1,12 @@
 package net.tilialacus.adventofcode2018.day2;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import static net.tilialacus.adventofcode2018.Input.inputFor;
 
 public class Part1 {
 
-    public static void main(String[] args) throws URISyntaxException, IOException {
+    public static void main(String[] args)  {
         List<String> lines = inputFor(Part1.class);
 
         long twos = lines.stream().filter(i -> hasCount(i, 2)).count();
