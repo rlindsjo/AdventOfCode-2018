@@ -1,5 +1,6 @@
 package net.tilialacus.adventofcode2018.day7;
 
+import net.tilialacus.adventofcode2018.Input;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -48,8 +49,20 @@ public class Day7Part1Test {
         for (String sample : sampleInput) {
             assembler.parse(sample);
         }
-        assembler.buildFullDependency();
-        String order = (String) assembler.getSteps().stream().sorted(Assembler.DEPENDENCY_ORDER).map(it -> ((Assembler.Step) it).getName()).collect(Collectors.joining());
+
+        String order = assembler.processAll().stream().map(Assembler.Step::getName).collect(Collectors.joining());
+
         assertEquals("CABDFE", order);
+    }
+
+    @Test
+    void result() {
+        for (String sample : Input.inputFor(assembler)) {
+            assembler.parse(sample);
+        }
+
+        String order = assembler.processAll().stream().map(Assembler.Step::getName).collect(Collectors.joining());
+
+        assertEquals("BGKDMJCNEQRSTUZWHYLPAFIVXO", order);
     }
 }

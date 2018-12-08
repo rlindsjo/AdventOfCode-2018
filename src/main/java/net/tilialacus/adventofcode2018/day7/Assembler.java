@@ -7,19 +7,6 @@ import java.util.stream.Collectors;
 
 public class Assembler {
 
-    public static final Comparator DEPENDENCY_ORDER = new Comparator<Step>() {
-        @Override
-        public int compare(Step step1, Step step2) {
-            if (step2.getDepends().contains(step1)) {
-                return -1;
-            } else if (step1.getDepends().contains(step2)) {
-                return 1;
-            } else {
-                return step1.getName().compareTo(step2.getName());
-            }
-
-        }
-    };
     // "Step C must be finished before step A can begin."
     private Pattern parser = Pattern.compile("Step (?<step>.) must be finished before step (?<blocks>.) can begin\\.");
 
@@ -58,6 +45,25 @@ public class Assembler {
         }
     }
 
+    public List<Step> processAll() {
+        List<Step> processed = new ArrayList<>();
+        Assembler.Step step;
+        while(steps.size() > 0) {
+            processed.add(process(getNext()));
+        }
+        return processed;
+    }
+
+    public Step getNext() {
+        return steps.values().stream().filter(Step::available).sorted(Comparator.comparing(Step::getName)).findFirst().orElse(null);
+    }
+
+    public Step process(Step step) {
+        steps.remove(step.getName());
+        steps.values().forEach(it -> it.getDepends().remove(step));
+        return step;
+    }
+
     class Step {
         private final String name;
         private final Set<Step> depends = new HashSet<>();
@@ -93,6 +99,14 @@ public class Assembler {
         @Override
         public String toString() {
             return name + "(" + depends.stream().map(Step::getName).collect(Collectors.joining(",")) + ")";
+        }
+
+        public boolean doesDepend(Step step) {
+            return depends.contains(step) || depends.stream().anyMatch(it -> it.doesDepend(step));
+        }
+
+        public boolean available() {
+            return depends.isEmpty();
         }
     }
 }
