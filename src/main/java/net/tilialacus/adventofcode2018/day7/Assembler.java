@@ -10,7 +10,14 @@ public class Assembler {
     public static final Comparator DEPENDENCY_ORDER = new Comparator<Step>() {
         @Override
         public int compare(Step step1, Step step2) {
-            return 0;
+            if (step2.getDepends().contains(step1)) {
+                return -1;
+            } else if (step1.getDepends().contains(step2)) {
+                return 1;
+            } else {
+                return step1.getName().compareTo(step2.getName());
+            }
+
         }
     };
     // "Step C must be finished before step A can begin."

@@ -42,4 +42,14 @@ public class Day7Part1Test {
         Set<Assembler.Step> expected = Stream.of("A", "B", "C", "D", "F").map(assembler::getStep).collect(Collectors.toSet());
         assertEquals(expected, assembler.getStep("E").getDepends());
     }
+
+    @Test
+    void sampleInputOrder() {
+        for (String sample : sampleInput) {
+            assembler.parse(sample);
+        }
+        assembler.buildFullDependency();
+        String order = (String) assembler.getSteps().stream().sorted(Assembler.DEPENDENCY_ORDER).map(it -> ((Assembler.Step) it).getName()).collect(Collectors.joining());
+        assertEquals("CABDFE", order);
+    }
 }
