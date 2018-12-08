@@ -55,7 +55,12 @@ public class Assembler {
     }
 
     public Step getNext() {
-        return steps.values().stream().filter(Step::available).sorted(Comparator.comparing(Step::getName)).findFirst().orElse(null);
+        List<Step> next = getNext(1);
+        return next.isEmpty() ? null : next.get(0);
+    }
+
+    public List<Step> getNext(int workers) {
+        return steps.values().stream().filter(Step::available).sorted(Comparator.comparing(Step::getName)).limit(workers).collect(Collectors.toList());
     }
 
     public Step process(Step step) {
@@ -67,6 +72,7 @@ public class Assembler {
     class Step {
         private final String name;
         private final Set<Step> depends = new HashSet<>();
+        private boolean processing;
 
         public Step(String name) {
             this.name = name;
@@ -106,7 +112,11 @@ public class Assembler {
         }
 
         public boolean available() {
-            return depends.isEmpty();
+            return depends.isEmpty() && !processing;
+        }
+
+        public void setProcessing() {
+            processing = true;
         }
     }
 }
