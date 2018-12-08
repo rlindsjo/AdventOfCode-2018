@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,13 +23,23 @@ public class Day7Part1Test {
             "Step F must be finished before step E can begin."
     );
 
-    private Assembler assempler = new Assembler();
+    private Assembler assembler = new Assembler();
 
     @Test
     void parseLine() {
-        Assembler.Step step = assempler.parse("Step C must be finished before step A can begin.");
+        Assembler.Step step = assembler.parse("Step C must be finished before step A can begin.");
 
         assertEquals("A", step.getName());
-        assertEquals(Collections.singleton(assempler.getStep("C")), step.getDepends());
+        assertEquals(Collections.singleton(assembler.getStep("C")), step.getDepends());
+    }
+
+    @Test
+    void sampleInputDependencies() {
+        for (String sample : sampleInput) {
+            assembler.parse(sample);
+        }
+        assembler.buildFullDependency();
+        Set<Assembler.Step> expected = Stream.of("A", "B", "C", "D", "F").map(assembler::getStep).collect(Collectors.toSet());
+        assertEquals(expected, assembler.getStep("E").getDepends());
     }
 }
