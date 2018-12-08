@@ -9,7 +9,7 @@ import static net.tilialacus.adventofcode2018.Input.inputFor;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Part1Test {
+public class Part2Test {
 
     private final List<String> sampleInput = Arrays.asList(
             "1, 1",
@@ -24,13 +24,13 @@ public class Part1Test {
     public void example() {
         grid.mapAll(sampleInput);
 
-        assertArrayEquals(new int[] {-1, -1, -1, 9, 17, -1}, grid.areas());
+        assertEquals(16, grid.limitedArea(32));
     }
 
     @Test
     public void result() {
         grid.mapAll(inputFor(grid));
 
-        assertEquals(5035, Arrays.stream(grid.areas()).max().orElse(-1));
+        assertEquals(35294, grid.limitedArea(10000));
     }
 }

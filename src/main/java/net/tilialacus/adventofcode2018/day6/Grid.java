@@ -32,6 +32,13 @@ public class Grid {
         coordinates.add(coordinate);
     }
 
+    void mapAll(List<String> sampleInput) {
+        for (String part : sampleInput) {
+            Coordinate coordinate = parse(part);
+            map(coordinate);
+        }
+    }
+
     static class Coordinate {
         private final int x;
         private final int y;
@@ -77,5 +84,22 @@ public class Grid {
             }
         }
         return areas;
+    }
+
+    public int limitedArea(int limit) {
+        int area = 0;
+        for (int y = min.y; y <= max.y; y++) {
+            for (int x = min.x; x <= max.x; x++) {
+                int distance = 0;
+                for (int i = 0; i < coordinates.size(); i++) {
+                    Coordinate coordinate = coordinates.get(i);
+                    distance += Math.abs(coordinate.x - x) + Math.abs(coordinate.y - y);
+                }
+                if (distance < limit) {
+                    area ++;
+                }
+            }
+        }
+        return area;
     }
 }
