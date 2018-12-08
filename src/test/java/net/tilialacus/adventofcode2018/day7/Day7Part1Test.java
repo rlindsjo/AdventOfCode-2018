@@ -2,8 +2,8 @@ package net.tilialacus.adventofcode2018.day7;
 
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,7 +26,7 @@ public class Day7Part1Test {
     void parseLine() {
         Assembler.Step step = assempler.parse("Step C must be finished before step A can begin.");
 
-        assertEquals("C", step.getName());
-
+        assertEquals("A", step.getName());
+        assertEquals(Collections.singleton(assempler.getStep("C")), step.getDepends());
     }
 }
