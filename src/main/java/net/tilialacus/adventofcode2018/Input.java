@@ -16,4 +16,7 @@ public class Input {
         }
     }
 
+    public static List<String> inputFor(Object problem) {
+        return inputFor(problem.getClass());
+    }
 }
