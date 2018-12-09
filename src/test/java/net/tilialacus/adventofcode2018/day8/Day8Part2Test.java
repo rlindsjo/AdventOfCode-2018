@@ -1,5 +1,6 @@
 package net.tilialacus.adventofcode2018.day8;
 
+import net.tilialacus.adventofcode2018.Input;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,6 +16,15 @@ public class Day8Part2Test {
         Node node = Node.parse(data);
 
         assertEquals(66, node.getIndexedMetaSum());
+    }
+
+    @Test
+    void result() {
+        String[] data = Input.inputFor(Node.class).get(0).split(" ");
+
+        Node node = Node.parse(data);
+
+        assertEquals(22633, node.getIndexedMetaSum());
     }
 
 }
