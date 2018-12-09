@@ -50,4 +50,20 @@ public class Node {
     public int getMetaSum() {
         return Arrays.stream(meta).sum() + Arrays.stream(children).mapToInt(Node::getMetaSum).sum();
     }
+
+    public int getIndexedMetaSum() {
+        if (children.length == 0) {
+            return getMetaSum();
+        } else {
+            return Arrays.stream(meta).map(this::getChildMetaSum).sum();
+        }
+    }
+
+    private int getChildMetaSum(int index) {
+        if (index > children.length) {
+            return 0;
+        } else {
+            return children[index - 1].getIndexedMetaSum();
+        }
+    }
 }
