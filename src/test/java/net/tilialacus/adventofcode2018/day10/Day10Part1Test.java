@@ -55,13 +55,21 @@ public class Day10Part1Test {
         int pw = Integer.MAX_VALUE;
         int width = galaxy.getRight() - galaxy.getLeft();
         int i = 0;
-        while (pw > width) {
-           ++i;
-           galaxy.tick();
-           pw = width;
-           width = galaxy.getRight() - galaxy.getLeft();
+        int steps = 1000;
+        while (steps > 0) {
+            while (pw > width) {
+                i += steps;
+                galaxy.tick(steps);
+                pw = width;
+                width = galaxy.getRight() - galaxy.getLeft();
+            }
+            galaxy.tick(steps * -2);
+            width = galaxy.getRight() - galaxy.getLeft();
+            i -= steps * 2;
+            steps /= 10;
+            pw = Integer.MAX_VALUE;
         }
-        System.err.println(i - 1);
+        System.err.println(i + 1);
     }
 
     @Test
@@ -71,9 +79,7 @@ public class Day10Part1Test {
             galaxy.add(Galaxy.particle(line));
         }
 
-        for (int i = 0; i < 10036; i++) {
-            galaxy.tick();
-        }
+        galaxy.tick(10036);
         assertEquals(
                 "   ###     ###  #    #  ######  #    #  #    #  ######  ##### \n" +
                         "    #       #   #    #       #  #    #  #   #   #       #    #\n" +

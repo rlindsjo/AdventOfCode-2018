@@ -47,7 +47,11 @@ public class Galaxy {
     }
 
     public void tick() {
-        particles.forEach(Particle::tick);
+        particles.forEach(p -> p.tick(1));
+    }
+
+    public void tick(int ticks) {
+        particles.forEach(p -> p.tick(ticks));
     }
 
     @Override
@@ -86,9 +90,9 @@ public class Galaxy {
             return y;
         }
 
-        public void tick() {
-            x += vx;
-            y += vy;
+        public void tick(int ticks) {
+            x += ticks * vx;
+            y += ticks * vy;
         }
     }
 }
