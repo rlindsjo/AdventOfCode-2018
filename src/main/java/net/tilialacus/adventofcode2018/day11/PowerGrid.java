@@ -38,8 +38,14 @@ public class PowerGrid {
     public Coordinate findMax(int w, int h) {
         Coordinate best = new Coordinate(0, 0, Integer.MIN_VALUE);
         for (int x = 1; x <= 300 - w; x++) {
-            for (int y = 1; y <= 300 - h; y++) {
-                int sum = sum(x, y, w, h);
+            int sum = sum(x, 1, w, h);
+            if (sum > best.sum) {
+                best = new Coordinate(x, 1, sum);
+            }
+            for (int y = 2; y <= 300 - h; y++) {
+                for (int dx = x; dx < x + w; dx ++) {
+                    sum = sum - cachedPower(dx,y - 1) + cachedPower(dx, y + h - 1);
+                }
                 if (sum > best.sum) {
                     best = new Coordinate(x, y, sum);
                 }

@@ -29,8 +29,6 @@ public class Day11Part1Test {
                 powerGrid.toString(32, 44 , 5, 5)
         );
 
-        assertEquals(29, powerGrid.sum(33, 45, 3, 3));
-
         PowerGrid.Coordinate max = powerGrid.findMax(3, 3);
 
         assertAll(
