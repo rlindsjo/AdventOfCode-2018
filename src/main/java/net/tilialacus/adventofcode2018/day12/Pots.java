@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Pots {
-    List<Pot> state = new LinkedList<>();
+    private List<Pot> state = new LinkedList<>();
     private Set<String> generators = new HashSet<>();
 
     public void configure(List<String> input) {
@@ -34,12 +34,11 @@ public class Pots {
     }
 
     public void generate() {
-        state.add(0, new Pot(state.get(0).i - 1, false));
-        state.add(0, new Pot(state.get(0).i - 1, false));
-        state.add(0, new Pot(state.get(0).i - 1, false));
-        state.add(new Pot(state.get(state.size()-1).i + 1, false));
-        state.add(new Pot(state.get(state.size()-1).i + 1, false));
-        state.add(new Pot(state.get(state.size()-1).i + 1, false));
+        // Pad right and left to simplify calculations
+        for (int i = 0; i < 3; i++) {
+            state.add(0, new Pot(state.get(0).i - 1, false));
+            state.add(new Pot(state.get(state.size() - 1).i + 1, false));
+        }
 
         List<Pot> next = new LinkedList<>();
         for (int i = 0; i < state.size(); i++) {
