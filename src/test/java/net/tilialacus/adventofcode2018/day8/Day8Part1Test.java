@@ -36,7 +36,7 @@ public class Day8Part1Test {
 
     @Test
     void result() {
-        String[] data = Input.inputFor(Node.class).get(0).split(" ");
+        String[] data = Input.inputFor(this).get(0).split(" ");
 
         Node node = Node.parse(data);
 
