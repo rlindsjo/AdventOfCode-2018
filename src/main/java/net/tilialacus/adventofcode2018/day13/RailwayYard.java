@@ -17,32 +17,24 @@ public class RailwayYard {
             case '/':
                 switch (train.dir) {
                     case LEFT:
-                        train.dir = DOWN;
-                        break;
                     case RIGHT:
-                        train.dir = UP;
+                        train.dir = train.dir.left();
                         break;
                     case DOWN:
-                        train.dir = LEFT;
-                        break;
                     case UP:
-                        train.dir = RIGHT;
+                        train.dir = train.dir.right();
                         break;
                 }
                 break;
             case '\\':
                 switch (train.dir) {
                     case LEFT:
-                        train.dir = UP;
-                        break;
                     case RIGHT:
-                        train.dir = DOWN;
+                        train.dir = train.dir.right();
                         break;
                     case DOWN:
-                        train.dir = RIGHT;
-                        break;
                     case UP:
-                        train.dir = LEFT;
+                        train.dir = train.dir.left();
                         break;
                 }
                 break;
@@ -63,27 +55,18 @@ public class RailwayYard {
     }
 
     enum Direction {
-        LEFT, RIGHT, UP, DOWN;
+        LEFT, DOWN, RIGHT, UP;
 
         public Direction left() {
-            switch (this) {
-                case LEFT:
-                    return DOWN;
-                case RIGHT:
-                    return UP;
-                case DOWN:
-                    return RIGHT;
-                case UP:
-                    return LEFT;
-                default:
-                    throw new IllegalStateException();
-            }
+            return Direction.values()[(this.ordinal() + 1) % Direction.values().length];
         }
 
         public Direction right() {
             return left().left().left();
         }
-    };
+    }
+
+    ;
 
 
     private final char[][] track;
@@ -95,7 +78,7 @@ public class RailwayYard {
     }
 
     public static RailwayYard parse(List<String> lines) {
-        char[][] track = new char[lines.size()][lines.get(0).length()];
+        char[][] track = new char[lines.size()][lines.stream().mapToInt(String::length).max().getAsInt()];
         List<Train> trains = new ArrayList<Train>();
         for (int row = 0; row < lines.size(); row++) {
             char[] line = lines.get(row).toCharArray();
@@ -168,8 +151,12 @@ public class RailwayYard {
 
         public void intersection() {
             switch (intcount % 3) {
-                case 0: dir = dir.left(); break;
-                case 2: dir = dir.right(); break;
+                case 0:
+                    dir = dir.left();
+                    break;
+                case 2:
+                    dir = dir.right();
+                    break;
             }
             ++intcount;
         }
