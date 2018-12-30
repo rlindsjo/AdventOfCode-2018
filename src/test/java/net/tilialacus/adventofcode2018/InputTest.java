@@ -11,7 +11,7 @@ class InputTest {
 
     @Test
     public void loadInput() {
-        List<String> lines = Input.inputFor(InputTest.class);
+        List<String> lines = Input.inputFor(this);
         assertEquals(Arrays.asList("Line 1", "Line 2"), lines);
     }
 }
